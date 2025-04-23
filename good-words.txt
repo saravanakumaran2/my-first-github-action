@@ -1,0 +1,3 @@
+This file contains correctly spelled words.
+All sentences are clear and free of spelling errors.
+Commit messages should also be clean and well-written.
