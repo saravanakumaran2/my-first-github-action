@@ -6,7 +6,7 @@ on:
 
 jobs:
   test-wordpress:
-    runs-on: [self-hosted, LINUX]  # Correct casing
+    runs-on: [self-hosted, Linux]  # Correct casing
 
     steps:
     - name: Checkout code
