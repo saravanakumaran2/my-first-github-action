@@ -6,40 +6,40 @@ on:
 
 jobs:
   test-wordpress:
-    runs-on: [self-hosted, Linux]  # Correct casing
+    runs-on: [self-hosted, Linux]  # Use the actual label exactly as listed
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Setup Env
-      uses: ./custom-actions/setup-env
-      with:
-        db_user: ${{ secrets.WORDPRESS_DB_USER }}
-        db_pass: ${{ secrets.WORDPRESS_DB_PASSWORD }}
-        db_name: ${{ secrets.WORDPRESS_DB_NAME }}
-        root_pass: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+      - name: Setup Env
+        uses: ./custom-actions/setup-env
+        with:
+          db_user: ${{ secrets.WORDPRESS_DB_USER }}
+          db_pass: ${{ secrets.WORDPRESS_DB_PASSWORD }}
+          db_name: ${{ secrets.WORDPRESS_DB_NAME }}
+          root_pass: ${{ secrets.MYSQL_ROOT_PASSWORD }}
 
-    - name: Run WordPress with MySQL
-      run: docker-compose up -d
+      - name: Run WordPress with MySQL
+        run: docker-compose up -d
 
-    - name: Wait for services
-      run: sleep 30
+      - name: Wait for services
+        run: sleep 30
 
-    - name: Run Tests
-      run: ./test.sh
+      - name: Run Tests
+        run: ./test.sh
 
-    - name: Save test result as Artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: test-report
-        path: test_output.html
+      - name: Save test result as Artifact
+        uses: actions/upload-artifact@v4   # ✅ Updated to v4
+        with:
+          name: test-report
+          path: test_output.html
 
-    - name: Tear down
-      run: docker-compose down
+      - name: Tear down
+        run: docker-compose down
 
   deploy-windows:
-    runs-on: [self-hosted, WINDOWS]  # Correct casing
+    runs-on: [self-hosted, windows]  # ✅ lowercase label match
     needs: test-wordpress
 
     steps:
