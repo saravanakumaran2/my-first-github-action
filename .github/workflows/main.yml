@@ -39,40 +39,40 @@ jobs:
         run: docker-compose down
 
   test-wordpress-windows:
-      runs-on: [self-hosted, Windows]
-      needs: test-wordpress-linux
+    runs-on: [self-hosted, Windows]
+    needs: test-wordpress-linux
 
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-        - name: Setup Env
-          uses: ./custom-actions/setup-env
-          with:
-            db_user: ${{ secrets.WORDPRESS_DB_USER }}
-            db_pass: ${{ secrets.WORDPRESS_DB_PASSWORD }}
-            db_name: ${{ secrets.WORDPRESS_DB_NAME }}
-            root_pass: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-          shell: pwsh
-  
-        - name: Run WordPress with MySQL
-          run: docker-compose up -d
-          shell: pwsh
-  
-        - name: Wait for services
-          run: Start-Sleep -Seconds 30
-          shell: pwsh
-  
-        - name: Run Tests
-          run: ./test.sh
-          shell: bash
+      - name: Setup Env
+        uses: ./custom-actions/setup-env
+        with:
+          db_user: ${{ secrets.WORDPRESS_DB_USER }}
+          db_pass: ${{ secrets.WORDPRESS_DB_PASSWORD }}
+          db_name: ${{ secrets.WORDPRESS_DB_NAME }}
+          root_pass: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+        # NO shell here!
 
-        - name: Save test result as Artifact
-          uses: actions/upload-artifact@v4
-          with:
-            name: test-report-windows
-            path: test_output.html
-  
-        - name: Tear down
-          run: docker-compose down
-          shell: pwsh
+      - name: Run WordPress with MySQL
+        run: docker-compose up -d
+        shell: pwsh
+
+      - name: Wait for services
+        run: Start-Sleep -Seconds 30
+        shell: pwsh
+
+      - name: Run Tests
+        run: ./test.sh
+        shell: bash
+
+      - name: Save test result as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report-windows
+          path: test_output.html
+
+      - name: Tear down
+        run: docker-compose down
+        shell: pwsh
