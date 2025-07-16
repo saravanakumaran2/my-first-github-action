@@ -6,7 +6,7 @@ on:
 
 jobs:
   test-wordpress:
-    runs-on: [self-hosted, LINUX]  # Capital L
+    runs-on: [self-hosted, Linux]  # Correct casing
 
     steps:
     - name: Checkout code
@@ -39,7 +39,7 @@ jobs:
       run: docker-compose down
 
   deploy-windows:
-    runs-on: [self-hosted, WINDOWS]  # Capital W
+    runs-on: [self-hosted, Windows]  # Correct casing
     needs: test-wordpress
 
     steps:
