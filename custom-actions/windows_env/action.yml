@@ -1,14 +1,6 @@
 name: "Setup WordPress Env"
 description: "Export secrets as environment variables"
-runs:
-  using: "composite"
-  steps:
-    - run: |
-    echo "WORDPRESS_DB_USER=${{ inputs.db_user }}" >> $env:GITHUB_ENV
-    echo "WORDPRESS_DB_PASSWORD=${{ inputs.db_pass }}" >> $env:GITHUB_ENV
-    echo "WORDPRESS_DB_NAME=${{ inputs.db_name }}" >> $env:GITHUB_ENV
-    echo "MYSQL_ROOT_PASSWORD=${{ inputs.root_pass }}" >> $env:GITHUB_ENV
-  shell: powershell
+
 inputs:
   db_user:
     required: true
@@ -18,3 +10,13 @@ inputs:
     required: true
   root_pass:
     required: true
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        echo "WORDPRESS_DB_USER=${{ inputs.db_user }}" >> $env:GITHUB_ENV
+        echo "WORDPRESS_DB_PASSWORD=${{ inputs.db_pass }}" >> $env:GITHUB_ENV
+        echo "WORDPRESS_DB_NAME=${{ inputs.db_name }}" >> $env:GITHUB_ENV
+        echo "MYSQL_ROOT_PASSWORD=${{ inputs.root_pass }}" >> $env:GITHUB_ENV
+      shell: powershell
