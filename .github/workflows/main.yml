@@ -24,7 +24,7 @@ jobs:
         run: docker-compose up -d
 
       - name: Wait for services
-        run: sleep 60
+        run: sleep 30
 
       - name: Run Tests
         run: ./test.sh
@@ -38,10 +38,5 @@ jobs:
       - name: Tear down
         run: docker-compose down
 
-  deploy-windows:
-    runs-on: [self-hosted, windows]  # ✅ lowercase label match
-    needs: test-wordpress
 
-    steps:
-      - name: Deployment placeholder
-        run: echo "Deploying from Windows runner"
+
