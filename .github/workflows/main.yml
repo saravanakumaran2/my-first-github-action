@@ -27,13 +27,13 @@ jobs:
         run: sleep 30
 
       - name: Run Tests
-        run: ./test.sh
+        run: ./test.sh test_output_linux.html
 
-      - name: Save test result as Artifact
+      - name: Save Linux test result as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: test-report
-          path: test_output.html
+          name: test-report-linux
+          path: test_output_linux.html
 
       - name: Tear down
         run: docker-compose down
@@ -63,15 +63,17 @@ jobs:
         run: Start-Sleep -Seconds 30
         shell: powershell
 
-      - name: Run Tests
-        run: dir ./test.sh
+      - name: Run Tests on Windows
+        run: .\test.ps1 test_output_windows.html
         shell: powershell
 
-      - name: Save test result as Artifact
+
+      - name: Save Windows test result as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: test-report-windows
-          path: test_output.html
+         name: test-report-windows
+         path: test_output_windows.html
+
 
       - name: Tear down
         run: docker-compose down
