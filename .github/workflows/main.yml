@@ -6,7 +6,7 @@ on:
 
 jobs:
   test-wordpress:
-    runs-on: [self-hosted, linux]
+    runs-on: [self-hosted, LINUX]  # Capital L
 
     steps:
     - name: Checkout code
@@ -39,8 +39,9 @@ jobs:
       run: docker-compose down
 
   deploy-windows:
-    runs-on: [self-hosted, windows]
+    runs-on: [self-hosted, WINDOWS]  # Capital W
     needs: test-wordpress
+
     steps:
       - name: Deployment placeholder
         run: echo "Deploying from Windows runner"
