@@ -40,7 +40,7 @@ jobs:
 
   test-wordpress-windows:
     runs-on: [self-hosted, Windows]
-    needs: test-wordpress-linux   # this makes windows job wait until linux job completes
+    needs: test-wordpress-linux
 
     steps:
       - name: Checkout code
@@ -53,6 +53,7 @@ jobs:
           db_pass: ${{ secrets.WORDPRESS_DB_PASSWORD }}
           db_name: ${{ secrets.WORDPRESS_DB_NAME }}
           root_pass: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+        shell: pwsh
 
       - name: Run WordPress with MySQL
         run: docker-compose up -d
