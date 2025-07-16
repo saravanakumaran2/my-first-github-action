@@ -1,19 +1,14 @@
 #!/bin/bash
 
-# Simple test logic (replace with your own tests)
-echo "Running dummy test..."
-echo "<html><body><h1>Test Report</h1><p>Test Passed!</p></body></html>" > result.html
+URL="http://localhost:8000"
+OUTPUT_FILE=$1  # Output file name passed as argument
 
-# Detect OS and rename file accordingly
-OS_NAME="$(uname -s)"
+echo "Testing WordPress site at $URL..."
 
-if [[ "$OS_NAME" == "Linux" ]]; then
-  mv result.html test_output_linux.html
-  echo "Saved test results to test_output_linux.html"
-elif [[ "$OS_NAME" == "MINGW64_NT"* || "$OS_NAME" == "CYGWIN_NT"* || "$OS_NAME" == "MSYS_NT"* ]]; then
-  mv result.html test_output_windows.html
-  echo "Saved test results to test_output_windows.html"
+if curl --silent --fail "$URL" > /dev/null; then
+    echo "<html><body><h1>Test Passed</h1><p>WordPress site is up at $URL</p></body></html>" > $OUTPUT_FILE
+    echo "✅ Site is up. Test passed."
 else
-  echo "Unknown OS: $OS_NAME"
-  mv result.html test_output_unknown.html
+    echo "<html><body><h1>Test Failed</h1><p>Could not reach $URL</p></body></html>" > $OUTPUT_FILE
+    echo "❌ Site is down. Test failed."
 fi
