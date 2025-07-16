@@ -1,0 +1,40 @@
+name: WordPress 
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test-wordpress:
+    runs-on: [self-hosted, Windows] 
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Env
+        uses: ./custom-actions/setup-env
+        with:
+          db_user: ${{ secrets.WORDPRESS_DB_USER }}
+          db_pass: ${{ secrets.WORDPRESS_DB_PASSWORD }}
+          db_name: ${{ secrets.WORDPRESS_DB_NAME }}
+          root_pass: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+
+      - name: Run WordPress with MySQL
+        run: docker-compose up -d
+
+      - name: Wait for services
+        run: sleep 30
+
+      - name: Run Tests
+        run: ./test.sh
+
+      - name: Save test result as Artifact
+        uses: actions/upload-artifact@v4   # ✅ Updated to v4
+        with:
+          name: test-report
+          path: test_output.html
+
+      - name: Tear down
+        run: docker-compose down
+
