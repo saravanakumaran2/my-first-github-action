@@ -21,9 +21,7 @@ jobs:
           root_pass: ${{ secrets.MYSQL_ROOT_PASSWORD }}
 
       - name: Run WordPress with MySQL
-        run: |
-         docker network prune -f || true
-         docker-compose up -d
+        run: docker-compose up -d
 
       - name: Wait for services
         run: sleep 30
@@ -58,9 +56,7 @@ jobs:
         # NO shell here!
 
       - name: Clean Docker network and start containers (PowerShell)
-        run: |
-         docker network prune -f
-         docker-compose up -d
+        run: docker-compose up -d
         shell: powershell
 
       - name: Wait for services
