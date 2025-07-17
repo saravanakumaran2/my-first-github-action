@@ -61,7 +61,7 @@ jobs:
         shell: powershell
 
       - name: Wait for services
-        run: Start-Sleep -Seconds 10
+        run: Start-Sleep -Seconds 30
         shell: powershell
 
       - name: Run Tests on Windows
