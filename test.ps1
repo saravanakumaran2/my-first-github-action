@@ -1,6 +1,6 @@
 param(
     [string]$OutputFile = "test_output_windows.html",
-    [string]$Url = "http://localhost"  # Change this to your WordPress URL if different
+    [string]$Url = "http://localhost:8000"  # Change this to your WordPress URL if different
 )
 
 try {
